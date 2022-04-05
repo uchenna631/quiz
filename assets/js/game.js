@@ -1,8 +1,16 @@
 const question = document.querySelector('#question');
-const choices = document.querySelectorAll('.choice-text');
+const choices = Array.from(document.querySelectorAll('.choice-text'));
+console
 const progressText = document.querySelector('#progress-text');
 const scoreText = document.querySelector('#score');
 const progressBarFull = document.querySelector('#progress-bar-full');
+
+let currentQuestion = {}
+let acceptingAnswers = true;
+let score = 0
+let questionCounter = 0
+let availableQuestions = []
+
 
 let questions = [{
     question: 'what is 2 + 1',
@@ -52,10 +60,11 @@ startGame = () => {
 getNewQuestion = () => {
     if(availableQuestions.length === 0 || questionCounter > maxQuestions) {
         localStorage.setItem('mostRecentSCore', score)
+
         return window.location.assign('/end.html')
     }
 
-    questionCounter++
+    questionCounter++ 
     progressText.innerText = `Question ${questionCounter} of ${maxQuestions}`
     progressBarFull.style.width = `${(questionCounter/maxQuestions)*100}%`
 
