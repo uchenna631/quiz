@@ -56,6 +56,9 @@ body {
     text-align: center;
 }
 
+#timer {
+    font-size: 2rem;
+}
 #progress-bar {
     width: 20rem;
     height: 3rem;
