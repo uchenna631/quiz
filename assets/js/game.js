@@ -73,54 +73,53 @@ function getNewQuestion () {
     questionCounter++
     if (questionCounter <= maxNumQuest){
         progressText.innerText = `Question ${questionCounter} of ${maxNumQuest}`
-    progressBarFull.style.width = `${(questionCounter/maxNumQuest)*100}%`
+        progressBarFull.style.width = `${(questionCounter/maxNumQuest)*100}%`
 
-    const questionIndex = Math.floor(Math.random() * availableQuestions.length)
-    currentQuestion = availableQuestions[questionIndex]
-    question.innerText = currentQuestion.question
+        const questionIndex = Math.floor(Math.random() * availableQuestions.length)
+        currentQuestion = availableQuestions[questionIndex]
+        question.innerText = currentQuestion.question
 
-    choices.forEach(choice => {
-        const number = choice.dataset['number']
-        choice.innerText = currentQuestion['choice' + number]
-    })
+        choices.forEach(choice => {
+            const number = choice.dataset['number']
+            choice.innerText = currentQuestion['choice' + number]
+        })
 
-    availableQuestions.splice(questionIndex, 1);
-    acceptingAnswers = true;
+        availableQuestions.splice(questionIndex, 1);
+        acceptingAnswers = true;
 
-choices.forEach(choice => {
-    choice.addEventListener('click', e => {
-        if(!acceptingAnswers) return
+        choices.forEach(choice => {
+        choice.addEventListener('click', e => {
+            if(!acceptingAnswers) return
 
-        acceptingAnswers = false
-        const selectedChoice = e.target;
-        const selectedAnswer = selectedChoice.innerText
+            acceptingAnswers = false
+            const selectedChoice = e.target;
+            const selectedAnswer = selectedChoice.innerText
 
-        let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
+            let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
 
-        if(classToApply === 'correct') {
-            incrementScore(scorePoints)
-        }
+            if(classToApply === 'correct') {
+                incrementScore(scorePoints)
+            }
 
-        selectedChoice.parentElement.classList.add(classToApply);
+            selectedChoice.parentElement.classList.add(classToApply);
 
-        setTimeout(()=> {
-            selectedChoice.parentElement.classList.remove(classToApply);
-            getNewQuestion();
-        }, 1000)
-    })
-})
+            setTimeout(()=> {
+                selectedChoice.parentElement.classList.remove(classToApply);
+                getNewQuestion();
+            }, 1000)
+            })
+        })
 
-incrementScore = num => {
-    score += num
-    localStorage.setItem('mostRecentScore', score)
-    scoreText.innerText = score
-    }
+        incrementScore = num => {
+        score += num
+        localStorage.setItem('mostRecentScore', score)
+        scoreText.innerText = score
+         }
 
     } else {
         mostRecentSCore = []
         mostRecentSCore.push(score)
         console.log(mostRecentSCore)
-        return window.location.assign('/end.html')
-}
+        return window.location.assign('/end.html')}
 }
 startGame()
