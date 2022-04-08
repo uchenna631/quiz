@@ -12,7 +12,7 @@ let acceptingAnswers = true;
 let score;
 let questionCounter = 0;
 let availableQuestions = [];
-let mostRecentSCore = []
+let mostRecentScore = []
 
 
 let questions = [{
@@ -33,7 +33,7 @@ let questions = [{
    },
    {
     question: 'what is 2 + 3',
-       choice1: '5 I love you so much dear. I cannot do without you' ,
+       choice1: '5' ,
        choice2: '4',
        choice3: '35',
        choice4: '21',
@@ -64,30 +64,18 @@ startGame = () => {
 //New function
 function saveMostRecentScore(score){
 
-    localStorage.setItem('mostRecentSCore', score)
+    localStorage.setItem('mostRecentScore', score)
 
     return window.location.assign('/end.html')
 }
 
-function getNewQuestion () {
-    questionCounter++
-    if (questionCounter <= maxNumQuest){
-        progressText.innerText = `Question ${questionCounter} of ${maxNumQuest}`
-        progressBarFull.style.width = `${(questionCounter/maxNumQuest)*100}%`
+function questionProgressBar(){
+    progressText.innerText = `Question ${questionCounter} of ${maxNumQuest}`
+    progressBarFull.style.width = `${(questionCounter/maxNumQuest)*100}%`
+}
 
-        const questionIndex = Math.floor(Math.random() * availableQuestions.length)
-        currentQuestion = availableQuestions[questionIndex]
-        question.innerText = currentQuestion.question
-
-        choices.forEach(choice => {
-            const number = choice.dataset['number']
-            choice.innerText = currentQuestion['choice' + number]
-        })
-
-        availableQuestions.splice(questionIndex, 1);
-        acceptingAnswers = true;
-
-        choices.forEach(choice => {
+function makeChoice(){
+    choices.forEach(choice => {
         choice.addEventListener('click', e => {
             if(!acceptingAnswers) return
 
@@ -109,6 +97,26 @@ function getNewQuestion () {
             }, 1000)
             })
         })
+}
+
+function getNewQuestion () {
+    questionCounter++
+    if (questionCounter <= maxNumQuest){
+        questionProgressBar()
+
+        const questionIndex = Math.floor(Math.random() * availableQuestions.length)
+        currentQuestion = availableQuestions[questionIndex]
+        question.innerText = currentQuestion.question
+
+        choices.forEach(choice => {
+            const number = choice.dataset['number']
+            choice.innerText = currentQuestion['choice' + number]
+        })
+
+        availableQuestions.splice(questionIndex, 1);
+        acceptingAnswers = true;
+
+        makeChoice()
 
         incrementScore = num => {
         score += num
@@ -117,9 +125,9 @@ function getNewQuestion () {
          }
 
     } else {
-        mostRecentSCore = []
-        mostRecentSCore.push(score)
-        console.log(mostRecentSCore)
+        mostRecentScore = []
+        mostRecentScore.push(score)
+        console.log(mostRecentScore)
         return window.location.assign('/end.html')}
 }
 startGame()
