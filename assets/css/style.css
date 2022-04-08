@@ -43,10 +43,10 @@ h2 {
     align-items: center;
 }
 
-.justify-center {
+/* .justify-center {
     justify-content: center;
 
-}
+} */
 
 .text-center {
     text-align: center;
@@ -92,10 +92,6 @@ h2 {
     box-shadow: 0 0.4rem 1.4rem 0 rgb(255, 255, 0, 0.5);
 }
 
-.fa-crown {
-    font-size: 2.4rem;
-    margin-left: 1.5rem;
-}
 
 /* End page css */
 
